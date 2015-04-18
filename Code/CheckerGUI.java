@@ -1207,7 +1207,7 @@ public class CheckerGUI extends JFrame implements ActionListener{
 		//does sequence of events for a resign
 		theFacade.pressQuit();
 		
-		//if the source came from the facade
+		//if the Code came from the facade
 	    }else if( e.getSource().equals( theFacade ) ) {
 		
 		//if its a player switch event
