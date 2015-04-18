@@ -28,6 +28,8 @@
  * @author
  *
  */
+package Code;
+
 class PlayCheckers{
 	
 	/*

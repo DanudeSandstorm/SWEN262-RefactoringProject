@@ -14,6 +14,9 @@
  */
                                       
 // Not all of these are probably necessary.
+
+package Code;
+
 import java.awt.*;
 import java.util.*;
 import java.awt.event.*;

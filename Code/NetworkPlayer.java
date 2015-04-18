@@ -11,6 +11,8 @@
  *
  */
 
+package Code;
+
 import java.net.*;
 import java.io.*;
 import javax.swing.JOptionPane;

@@ -10,6 +10,9 @@
  *   Initial creation of case study
  *
  */
+
+package Code;
+
 import java.net.*;
 import javax.swing.*;
 import java.awt.event.*;

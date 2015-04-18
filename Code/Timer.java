@@ -11,6 +11,8 @@
  *
  */
 
+package Code;
+
 /**
  *  This timer runs on the separate thread and during
  *  the simulation tells fasade to update the warning and normal times 

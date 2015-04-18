@@ -10,6 +10,9 @@
  *   Initial creation of case study
  *
  */
+
+package Code;
+
 import java.awt.*;
 import java.util.*;
 
