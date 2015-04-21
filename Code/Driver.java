@@ -11,6 +11,8 @@
  *
  */
 
+package Code;
+
 import java.awt.*;
 import java.net.*;
 import javax.swing.*;
