@@ -25,36 +25,36 @@ import java.util.*;
 import java.awt.*;
 
 public abstract class Piece {
-	
-   private Color color; // the color of the piece
 
-      
-   /**
-    * The constructor for this piece
-    * 
-    * @param c - the color for this piece
-    */
-   public Piece( Color c ) {
+	private Color color; // the color of the piece
 
-	   // set the color
-	   color = c;
-   }
+	/**
+	 * The constructor for this piece
+	 * 
+	 * @param c
+	 *            - the color for this piece
+	 */
+	public Piece(Color c) {
 
-   /**
-    * The method which is abstract
-    * 
-    * @return the type of the piece
-    */
-   abstract int getType();
-   
-   /**
-    * This method returns the color of this piece
-    * 
-    * @return the color for this piece
-    */
-   public Color getColor() {
-  
-	   return color;
-   }
+		// set the color
+		color = c;
+	}
+
+	/**
+	 * The method which is abstract
+	 * 
+	 * @return the type of the piece
+	 */
+	abstract int getType();
+
+	/**
+	 * This method returns the color of this piece
+	 * 
+	 * @return the color for this piece
+	 */
+	public Color getColor() {
+
+		return color;
+	}
 
 }// Piece
