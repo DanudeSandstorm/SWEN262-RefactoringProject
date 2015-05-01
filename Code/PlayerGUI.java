@@ -26,11 +26,11 @@ import javax.swing.event.*;
  * @author
  * 
  */
-public class Secondscreen extends JFrame implements ActionListener,
+public class PlayerGUI extends JFrame implements ActionListener,
 		ChangeListener {
 
 	private Facade theFacade;
-	private Firstscreen theFirst;
+	private GUIManager guiManager;
 	private int gameType;
 
 	// Variables declaration
@@ -61,12 +61,13 @@ public class Secondscreen extends JFrame implements ActionListener,
 	 * 
 	 */
 
-	public Secondscreen(Facade f, Firstscreen first, int type) {
+	public PlayerGUI(Facade f, GUIManager manager, int type) {
 
-		super("Second Screen");
+		super("Game and Player Settings");
 		theFacade = f;
-		theFirst = first;
+		guiManager = manager;
 		gameType = type;
+
 
 		initComponents();
 		pack();
@@ -328,7 +329,7 @@ public class Secondscreen extends JFrame implements ActionListener,
 				// if they hit cancel go to the previous screen
 			} else if (e.getActionCommand().equals("cancel")) {
 				this.hide();
-				theFirst.show();
+				guiManager.networkGUIShow();
 
 				// handle whether or not a timer is desired
 			} else if (e.getSource() instanceof Checkbox) {

@@ -24,10 +24,12 @@ import java.awt.*;
  * @version
  */
 
-public class Firstscreen extends JFrame implements ActionListener {
+public class NetworkingGUI extends JFrame implements ActionListener {
 
-	Facade theFacade;
-	Secondscreen next;
+	//Facade theFacade;
+	//Secondscreen next;
+	GUIManager guiManager;
+	
 
 	// Variables declaration - do not modify
 	private JRadioButton LocalGameButton;
@@ -39,6 +41,8 @@ public class Firstscreen extends JFrame implements ActionListener {
 	private JButton CancelButton;
 	private JLabel IPExampleLabel;
 	private ButtonGroup gameModes;
+	
+	
 
 	// End of variables declaration
 
@@ -50,10 +54,12 @@ public class Firstscreen extends JFrame implements ActionListener {
 	 * 
 	 */
 
-	public Firstscreen(Facade facade) {
+	public NetworkingGUI(Facade facade, GUIManager manager) {
 
-		super("First screen");
-		theFacade = facade;
+		super("Networking Settings");
+		//theFacade = facade;
+		guiManager = manager;
+		
 		initComponents();
 		pack();
 	}
@@ -216,44 +222,18 @@ public class Firstscreen extends JFrame implements ActionListener {
 
 				// a temporary button to use for determining the game type
 				ButtonModel tempButton = gameModes.getSelection();
+				String mode = "";
+				
+				mode = tempButton.getActionCommand();
+				
+				guiManager.setGameMode(mode);
+				guiManager.createPlayer(1, mode);
+				guiManager.createPlayer(2, mode);
+				this.hide();
+				
+				guiManager.instancePlayersGUI();
+				guiManager.playerSettingsGUIShow();
 
-				// if check to see of the local radio button is selected
-				if (tempButton.getActionCommand().equals("local")) {
-
-					// set up a local game
-					theFacade.setGameMode(theFacade.LOCALGAME);
-
-					theFacade.createPlayer(1, theFacade.LOCALGAME);
-					theFacade.createPlayer(2, theFacade.LOCALGAME);
-
-					// hide the Firstscreen, make a Secondscreen and show it
-					this.hide();
-					next = new Secondscreen(theFacade, this,
-							theFacade.LOCALGAME);
-					next.show();
-
-					// if the host game button is selected
-				} else if (tempButton.getActionCommand().equals("host")) {
-
-					// set up to host a game
-					theFacade.setGameMode(theFacade.HOSTGAME);
-
-					theFacade.createPlayer(1, theFacade.HOSTGAME);
-					theFacade.createPlayer(2, theFacade.HOSTGAME);
-
-					// hide the Firstscreen, make the Secondscreen and show it
-					this.hide();
-					next = new Secondscreen(theFacade, this, theFacade.HOSTGAME);
-					next.show();
-
-					// if the join game button is selected
-				} else if (tempButton.getActionCommand().equals("join")) {
-
-					// set up to join a game
-					theFacade.setGameMode(theFacade.CLIENTGAME);
-
-					theFacade.createPlayer(1, theFacade.CLIENTGAME);
-					theFacade.createPlayer(2, theFacade.CLIENTGAME);
 
 					// try to connect
 					try {
@@ -261,13 +241,17 @@ public class Firstscreen extends JFrame implements ActionListener {
 						// create a URL from the IP address in the IPfield
 						URL address = new URL("http://" + IPField.getText());
 						// set the host
-						theFacade.setHost(address);
+						//theFacade.setHost(address);
+						guiManager.setHost(address);
 
 						// hide the Firstscreen, make and show the Second screen
-						this.hide();
-						next = new Secondscreen(theFacade, this,
-								theFacade.CLIENTGAME);
-						next.show();
+						//this.hide();
+						guiManager.instancePlayersGUI();
+						guiManager.playerSettingsGUIShow();
+						
+						//next = new Secondscreen(theFacade, this,
+						//		theFacade.CLIENTGAME);
+						//next.show();
 
 						// catch any exceptions
 					} catch (MalformedURLException x) {
@@ -277,7 +261,7 @@ public class Firstscreen extends JFrame implements ActionListener {
 					}// end of networking catch statement
 
 					// set up to connect to another person
-				}
+				//}
 
 				// if they hit cancel exit the game
 			} else if (e.getActionCommand().equals("cancel")) {

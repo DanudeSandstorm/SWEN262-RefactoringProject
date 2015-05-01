@@ -40,9 +40,15 @@ class PlayCheckers {
 	public static void main(String args[]) {
 
 		Driver theDriver = new Driver();
+		Facade facade = theDriver.getFacade();
+		GUIManager manager = new GUIManager(facade);
 
-		Firstscreen first = new Firstscreen(theDriver.getFacade());
-		first.show();
+		//NetworkingGUI first = new NetworkingGUI(theDriver.getFacade(), null);
+		//first.show();
+		
+		manager.instanceNetworkGUI(facade, manager);
+		
+		manager.networkGUIShow();
 
 	}
 
