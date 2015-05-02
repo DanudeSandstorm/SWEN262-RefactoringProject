@@ -54,7 +54,7 @@ public class NetworkingGUI extends JFrame implements ActionListener {
 	 * 
 	 */
 
-	public NetworkingGUI(Facade facade, GUIManager manager) {
+	public NetworkingGUI(GUIManager manager) {
 
 		super("Networking Settings");
 		//theFacade = facade;

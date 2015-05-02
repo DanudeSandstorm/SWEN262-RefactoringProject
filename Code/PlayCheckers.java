@@ -46,7 +46,7 @@ class PlayCheckers {
 		//NetworkingGUI first = new NetworkingGUI(theDriver.getFacade(), null);
 		//first.show();
 		
-		manager.instanceNetworkGUI(facade, manager);
+		manager.instanceNetworkGUI(manager);
 		
 		manager.networkGUIShow();
 

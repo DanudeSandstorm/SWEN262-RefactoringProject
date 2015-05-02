@@ -2,8 +2,11 @@ package Code;
 
 import java.net.URL;
 
+import javax.swing.JOptionPane;
+
 public class GUIManager {
 	Facade facade;
+	int gameType;
 	
 	public GUIManager(Facade facade){
 		this.facade = facade;
@@ -32,8 +35,8 @@ public class GUIManager {
 	
 	////////////////////////////////////////////////////
 	
-	public void instanceNetworkGUI(Facade facade, GUIManager manager){
-		networkGUI = new NetworkingGUI(facade, manager);
+	public void instanceNetworkGUI(GUIManager manager){
+		networkGUI = new NetworkingGUI(manager);
 	}
 		
 	public void networkGUIShow(){
@@ -48,7 +51,7 @@ public class GUIManager {
 	
 	
 	public void instancePlayersGUI(){
-		playerSettingsGUI = new PlayerGUI(facade, this, facade.CLIENTGAME);
+		playerSettingsGUI = new PlayerGUI(this, gameType);
 	}
 	
 	public void playerSettingsGUIShow(){
@@ -76,8 +79,20 @@ public class GUIManager {
 	}
 	
 	public void setGameMode(String mode) throws Exception{
-		int gameMode = getGameMode(mode);
-		facade.setGameMode(gameMode);
+		int gameType = getGameMode(mode);
+		facade.setGameMode(gameType);
+	}
+	
+	public int getFacadeLocal(){
+		return facade.LOCALGAME;
+	}
+	
+	public int getFacadeClient(){
+		return facade.CLIENTGAME;
+	}
+	
+	public int getFacadeHost(){
+		return facade.HOSTGAME;
 	}
 	
 	public void setHost(URL host){
@@ -87,6 +102,31 @@ public class GUIManager {
 	public void createPlayer(int playerID, String mode){
 		facade.createPlayer(playerID, this.getGameMode(mode));
 	}
+	
+	public void setPlayerName(int playerID, String name){
+		facade.setPlayerName(playerID, name);
+	}
+	
+	public String getPlayerName(int playerID){
+		return facade.getPlayerName(playerID);
+	}
+	
+	public void setTimer(int totalLength, int warningLength){
+		try {
+			facade.setTimer(totalLength, warningLength);
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null,
+					"Invalid Timer value(s)", "Error",
+					JOptionPane.INFORMATION_MESSAGE);
+			e.printStackTrace();
+		}
+	}
+	
+	public void startGame(){
+		facade.startGame();
+	}
+	
+	
 	
 
 }

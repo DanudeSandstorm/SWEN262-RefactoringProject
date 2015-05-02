@@ -29,7 +29,7 @@ import javax.swing.event.*;
 public class PlayerGUI extends JFrame implements ActionListener,
 		ChangeListener {
 
-	private Facade theFacade;
+	//private Facade theFacade;
 	private GUIManager guiManager;
 	private int gameType;
 
@@ -61,13 +61,12 @@ public class PlayerGUI extends JFrame implements ActionListener,
 	 * 
 	 */
 
-	public PlayerGUI(Facade f, GUIManager manager, int type) {
+	public PlayerGUI(GUIManager manager, int type) {
 
 		super("Game and Player Settings");
-		theFacade = f;
+		//theFacade = f;
 		guiManager = manager;
 		gameType = type;
-
 
 		initComponents();
 		pack();
@@ -231,11 +230,11 @@ public class PlayerGUI extends JFrame implements ActionListener,
 
 		// determine what components should be disabled
 		// depending on the game mode
-		if (gameType == theFacade.LOCALGAME) {
-		} else if (gameType == theFacade.HOSTGAME) {
+		if (gameType == guiManager.getFacadeLocal() ) {
+		} else if (gameType == guiManager.getFacadeHost()) {
 			playerTwoLabel.setEnabled(false);
 			playerTwoField.setEnabled(false);
-		} else if (gameType == theFacade.CLIENTGAME) {
+		} else if (gameType == guiManager.getFacadeClient()) {
 			playerOneLabel.setEnabled(false);
 			playerOneField.setEnabled(false);
 
@@ -289,42 +288,40 @@ public class PlayerGUI extends JFrame implements ActionListener,
 					}
 				}
 
-				theFacade.setPlayerName(1, playerOneField.getText());
-				theFacade.setPlayerName(2, playerTwoField.getText());
+				guiManager.setPlayerName(1, playerOneField.getText());
+				guiManager.setPlayerName(2, playerTwoField.getText());
 
 				// if a timer is desired
 				if (timedGameBox.isEnabled()) {
 					if (timedGameBox.getState()) {
 
 						// set the 2 timer values
-						try {
 
-							theFacade.setTimer(turnLengthField.getValue(),
+						guiManager.setTimer(turnLengthField.getValue(),
 									warningLengthField.getValue());
 
-						} catch (Exception x) {
-
-							JOptionPane.showMessageDialog(null,
-									"Invalid Timer value(s)", "Error",
-									JOptionPane.INFORMATION_MESSAGE);
-						}
 						// else set timer values to a no timer constant
 					} else {
-						theFacade.setTimer(-1, -1);
+						guiManager.setTimer(-1, -1);
 
 					}
 				} else {
-					theFacade.setTimer(-1, -1);
+					guiManager.setTimer(-1, -1);
 
 				}
 
 				// start the game
-				theFacade.startGame();
+				guiManager.startGame();
 				// hide this screen, make and show the GUI
 				this.hide();
+				/*
 				CheckerGUI GUI = new CheckerGUI(theFacade,
 						theFacade.getPlayerName(1), theFacade.getPlayerName(2));
-				GUI.show();
+				GUI.show()
+				*/
+				guiManager.instanceBoardGUI(guiManager.getPlayerName(1), 
+						guiManager.getPlayerName(2));
+				guiManager.boardGUIShow();
 
 				// if they hit cancel go to the previous screen
 			} else if (e.getActionCommand().equals("cancel")) {
