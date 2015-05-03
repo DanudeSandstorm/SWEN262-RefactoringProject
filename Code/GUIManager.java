@@ -16,6 +16,7 @@ public class GUIManager {
 	CheckerGUI playingBoardGUI; //= new CheckerGUI(facade, null, null);
 	NetworkingGUI networkGUI; //= new NetworkingGUI(null, this);
 	PlayerGUI playerSettingsGUI; //= new PlayerGUI(null, this, 0);
+	ReplayGUI replayGUI;
 	
 	////////////////////////////////////////////////////
 	
@@ -61,6 +62,21 @@ public class GUIManager {
 	public void playerSettingsGUIHide(){
 		playerSettingsGUI.hide();
 	}
+	
+	////////////////////////////////////////////////////
+	
+	public void instanceReplayGUI(){
+		replayGUI = new ReplayGUI(this);
+	}
+	
+	public void replayGUIShow(){
+		replayGUI.show();
+	}
+	
+	public void replayGUIHide(){
+		replayGUI.hide();
+	}	
+	
 	
 	////////////////////////////////////////////////////
 	
