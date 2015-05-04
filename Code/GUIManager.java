@@ -20,7 +20,7 @@ public class GUIManager {
 	////////////////////////////////////////////////////
 	
 	public void instanceBoardGUI(String player1, String player2){
-		playingBoardGUI = new CheckerGUI(facade, player1, player2);
+		playingBoardGUI = new CheckerGUI(this, player1, player2);
 		
 	}
 	
