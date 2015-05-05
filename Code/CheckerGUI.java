@@ -47,7 +47,9 @@ public class CheckerGUI extends JFrame implements ActionListener {
 																	// of the
 																	// squares
 	private int timeRemaining;// the time remaining
-
+	
+	private GUIManager manager;
+	
 	private JButton jButton1;
 	private JButton jButton2;
 	private JButton jButton3;
@@ -118,6 +120,7 @@ public class CheckerGUI extends JFrame implements ActionListener {
 	private JLabel secondsLeftLabel;
 	private JButton ResignButton;
 	private JButton DrawButton;
+	private JButton ReplayButton;
 	private JLabel warningLabel, whosTurnLabel;
 
 	// the names and time left
@@ -164,6 +167,8 @@ public class CheckerGUI extends JFrame implements ActionListener {
 		pack();
 		update();
 		// updateTime();
+		
+		manager = new GUIManager(theFacade);
 	}
 
 	/*
@@ -1179,11 +1184,19 @@ public class CheckerGUI extends JFrame implements ActionListener {
 			} else if (e.getActionCommand().equals("draw")) {
 				// does sequence of events for a draw
 				theFacade.pressDraw();
+				
+				manager.instanceReplayGUI();
+				manager.replayGUIShow();
+				this.hide();
 
 				// if resign is pressed
 			} else if (e.getActionCommand().equals("resign")) {
 				// does sequence of events for a resign
-				theFacade.pressQuit();
+				//theFacade.pressQuit();
+				
+				manager.instanceReplayGUI();
+				manager.replayGUIShow();
+				this.hide();
 
 				// if the Code came from the facade
 			} else if (e.getSource().equals(theFacade)) {
@@ -1227,7 +1240,9 @@ public class CheckerGUI extends JFrame implements ActionListener {
 
 		if (checkEndConditions()) {
 
-			theFacade.showEndGame(" ");
+			//theFacade.showEndGame(" ");
+			manager.instanceReplayGUI();
+			manager.replayGUIShow();
 		}
 
 		// the board to read information from

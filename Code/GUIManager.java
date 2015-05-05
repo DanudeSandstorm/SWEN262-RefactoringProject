@@ -16,8 +16,9 @@ public class GUIManager {
 	CheckerGUI playingBoardGUI; //= new CheckerGUI(facade, null, null);
 	NetworkingGUI networkGUI; //= new NetworkingGUI(null, this);
 	PlayerGUI playerSettingsGUI; //= new PlayerGUI(null, this, 0);
+	ReplayGUI replayGUI;
 	
-	////////////////////////////////////////////////////
+	////////////////////////// -CheckerGUI- //////////////////////////
 	
 	public void instanceBoardGUI(String player1, String player2){
 		playingBoardGUI = new CheckerGUI(this, player1, player2);
@@ -33,7 +34,7 @@ public class GUIManager {
 		
 	}
 	
-	////////////////////////////////////////////////////
+	////////////////////////// -NetworkGUI (Firstscreen)- //////////////////////////
 	
 	public void instanceNetworkGUI(GUIManager manager){
 		networkGUI = new NetworkingGUI(manager);
@@ -47,7 +48,7 @@ public class GUIManager {
 		networkGUI.hide();
 	}
 	
-	////////////////////////////////////////////////////
+	////////////////////////// -PlayerGUI (Secondscreen)- //////////////////////////
 	
 	
 	public void instancePlayersGUI(){
@@ -62,7 +63,22 @@ public class GUIManager {
 		playerSettingsGUI.hide();
 	}
 	
-	////////////////////////////////////////////////////
+	////////////////////////// -ReplayGUI- //////////////////////////
+	
+	public void instanceReplayGUI(){
+		replayGUI = new ReplayGUI(this);
+	}
+	
+	public void replayGUIShow(){
+		replayGUI.show();
+	}
+	
+	public void replayGUIHide(){
+		replayGUI.hide();
+	}	
+	
+	
+	////////////////////////// -Facade- //////////////////////////
 	
 	public int getGameMode(String mode){
 		
