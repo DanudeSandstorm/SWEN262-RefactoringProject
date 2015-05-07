@@ -14,6 +14,7 @@
 package Code;
 
 import java.awt.*;
+
 import javax.swing.*;
 
 /**
@@ -88,7 +89,8 @@ public class LocalPlayer extends Player {
 		JOptionPane.showMessageDialog(null, "Game has ended because: "
 				+ endMessage, "Game Over", JOptionPane.INFORMATION_MESSAGE);
 
-		System.exit(0);
+		
+		//System.exit(0);
 
 	}
 

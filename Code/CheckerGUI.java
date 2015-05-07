@@ -1184,9 +1184,7 @@ public class CheckerGUI extends JFrame implements ActionListener {
 			} else if (e.getActionCommand().equals("draw")) {
 				// does sequence of events for a draw
 				theFacade.pressDraw();
-				
-				manager.instanceReplayGUI();
-				manager.replayGUIShow();
+
 				this.hide();
 
 				// if resign is pressed

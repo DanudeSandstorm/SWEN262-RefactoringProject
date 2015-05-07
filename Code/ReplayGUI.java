@@ -73,14 +73,16 @@ public class ReplayGUI extends JFrame implements ActionListener,
 		// TODO Auto-generated method stub
 		if ((e.getActionCommand()).equals("rematch")) {
 			// Go through the mediator to get back to CheckersGUI with the previous settings.
-			//manager.instanceBoardGUI(player1, player2);
-			//manager.boardGUIShow();
+			String playerOne = manager.getPlayerName(1);
+			String playerTwo = manager.getPlayerName(2);
+			manager.instanceBoardGUI(playerOne, playerTwo);
+			manager.boardGUIShow();
+			this.hide();
 		} else if ((e.getActionCommand()).equals("menu")) {
 			// Go through the mediator to get to the MainMenuGUI.
 			manager.instanceNetworkGUI(manager);
 			manager.networkGUIShow();
 			this.hide();
-			
 		}
 	}
 	

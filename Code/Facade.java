@@ -15,7 +15,9 @@ package Code;
 
 import java.awt.*;
 import java.awt.event.*;
+
 import javax.swing.*;
+
 import java.net.*;
 
 /**
@@ -187,7 +189,7 @@ public class Facade extends Component {
 	 */
 	public void pressAcceptDraw() {
 
-		// calls acceptDraw() in teh driver
+		// calls acceptDraw() in the driver
 		theDriver.endInDraw(activePlayer);
 	}
 

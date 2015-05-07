@@ -15,6 +15,7 @@ package Code;
 
 import java.awt.*;
 import java.net.*;
+
 import javax.swing.*;
 
 /**
@@ -145,14 +146,20 @@ public class Driver {
 	 *       exit
 	 */
 	public void endGame(String message) {
-
-		// Call endOfGame on both players with the given message
-		playerOne.endOfGame(message);
-		playerTwo.endOfGame(message);
-
+		if(playerOne.getType() == Player.LOCALPLAYER && playerTwo.getType() == Player.LOCALPLAYER) {
+			playerOne.endOfGame(message);
+		} else {
+			// Call endOfGame on both players with the given message
+			playerOne.endOfGame(message);
+			playerTwo.endOfGame(message);
+		}
+		
 		// When players have acknowledged the end of game
 		// call System.exit()
-		System.exit(0);
+		//System.exit(0);
+		GUIManager manager = new GUIManager(theFacade);
+		manager.instanceReplayGUI();
+		manager.replayGUIShow();
 	}
 
 	/**
@@ -229,6 +236,7 @@ public class Driver {
 		// Calls endOfGame with a message that game ended in a draw.
 		endGame(player.getName() + "'s draw offer was accepted. \n\n"
 				+ "Game ended in a draw.");
+
 	}
 
 	/**
