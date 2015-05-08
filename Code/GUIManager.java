@@ -108,6 +108,18 @@ public class GUIManager {
 		return facade.playerSwitch;
 	}
 	
+	public Board getStateOfBoard() {
+		return facade.stateOfBoard();
+	}
+	
+	public int getTimerWarning() {
+		return facade.getTimerWarning();
+	}
+	
+	public int whosTurn(){
+		return facade.whosTurn();
+	}
+	
 	////////////////////////// -Facade- //////////////////////////
 	
 	public int getGameMode(String mode){
@@ -171,6 +183,8 @@ public class GUIManager {
 	public void startGame(){
 		facade.startGame();
 	}
+
+
 	
 
 	

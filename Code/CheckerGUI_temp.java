@@ -9,13 +9,14 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
-import java.util.Vector;
 
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
-public class CheckerGUI extends JFrame implements ActionListener {
+public class CheckerGUI_temp extends JFrame implements ActionListener {
 	
 
 	private GUIManager guiManager;
@@ -25,7 +26,7 @@ public class CheckerGUI extends JFrame implements ActionListener {
 	private int timeRemaining;
 	private JLabel timeRemainingLabel, secondsLeftLabel;
 	
-	private JLabel playerOnelabel;
+	private JLabel playerOneLabel;
 	private JLabel playerTwoLabel;
 	private JLabel whosTurnLabel;
 	
@@ -42,7 +43,7 @@ public class CheckerGUI extends JFrame implements ActionListener {
 	 * @param name1 player 1 name
 	 * @param name2 player 2 name
 	 */
-	public CheckerGUI(GUIManager manager, String name1, String name2) {
+	public CheckerGUI_temp(GUIManager manager, String name1, String name2) {
 		super("Checkers");
 		
 		// Long names mess up the way the GUI displays
@@ -86,7 +87,7 @@ public class CheckerGUI extends JFrame implements ActionListener {
 	private void initComponents() {
 		this.setResizable(false);
 		
-		playerOnelabel = new JLabel();
+		playerOneLabel = new JLabel();
 		playerTwoLabel = new JLabel();
 		whosTurnLabel = new JLabel();
 	
@@ -129,9 +130,9 @@ public class CheckerGUI extends JFrame implements ActionListener {
 		}
 		
 		//Generate Lables
-		playerOnelabel.setText("Player 1:     " + playerOnesName);
-		playerOnelabel.setForeground(Color.black);
-		getContentPane().add(playerOnelabel, new gridBagConstraints(2, 0, 4));
+		playerOneLabel.setText("Player 1:     " + playerOnesName);
+		playerOneLabel.setForeground(Color.black);
+		getContentPane().add(playerOneLabel, new gridBagConstraints(2, 0, 4));
 
 		playerTwoLabel.setText("Player 2:     " + playerTwosName);
 		playerTwoLabel.setForeground(Color.black);
@@ -261,14 +262,82 @@ public class CheckerGUI extends JFrame implements ActionListener {
 	 * spaces, updates whose turn it is
 	 */
 	private void update() {
-		//TODO
+		if (checkEndConditions()) {
+			
+			guiManager.instanceReplayGUI();
+			guiManager.replayGUIShow();
+		}
+		
+		Board board = guiManager.getStateOfBoard();
+		
+		for (int i = 1; i < board.sizeOf(); i++) {
+			
+			Icon pieceImage = null;
+			if (board.occupied(i)) {
+				
+				String colorName = "";
+				String pieceType = "";
+				
+				if (Color.blue.equals(board.colorAt(i))) {
+					colorName = "Blue";
+				}
+				else if (Color.white.equals(board.colorAt(i))) {
+					colorName = "White";
+				}
+				
+				if ((board.getPieceAt(i)).getType() == board.SINGLE){
+					pieceType = "Single";
+				}
+				else if ((board.getPieceAt(i)).getType() == board.KING){
+					pieceType = "King";
+				}
+				
+				//Take the corresponding image
+				pieceImage = new ImageIcon(CheckerGUI_temp.class
+						.getResource("Images/" + colorName + pieceType + ".gif"));
+			}
+			
+			//Set the piece at the space
+			JButton space = (JButton) spaces.get(i);
+			try{
+				space.setIcon(pieceImage);
+			}
+			catch (Exception e) {}
+			
+		}
+		
+		// this code updates whos turn it is
+		if (guiManager.whosTurn() == 2) {
+			playerTwoLabel.setForeground(Color.red);
+			playerOneLabel.setForeground(Color.black);
+			whosTurnLabel.setText(playerTwosName + "'s turn ");
+		} else if (guiManager.whosTurn() == 1) {
+			playerOneLabel.setForeground(Color.red);
+			playerTwoLabel.setForeground(Color.black);
+			whosTurnLabel.setText(playerOnesName + "'s turn");
+		}
 	}
 	
 	/**
 	 * Updates the timer
 	 */
 	private void updateTime() {
-		//TODO
+		
+		if (guiManager.getTimer() > 0){
+			// if the time has run out but not in warning time yet
+			// display warning and count warning time
+			if (timeRemaining <= 0 && (warningLabel.getText()).equals("")) {
+				timeRemaining = guiManager.getTimerWarning();
+				warningLabel.setText("Time is running out!!!");	
+			} 
+			// if the time has run out and it was in warning time quit game
+			else if (timeRemaining <= 0 && !(warningLabel.getText()).equals("")) {
+				guiManager.pressQuit();
+			} 
+			else timeRemaining--;
+			secondsLeftLabel.setText(timeRemaining + " sec.");
+		}
+		else secondsLeftLabel.setText("*****");
 	}
 	
 	/**
@@ -278,7 +347,41 @@ public class CheckerGUI extends JFrame implements ActionListener {
 	 *         if game needs to continue
 	 */
 	private boolean checkEndConditions() {
-		//TODO
+		
+		try {
+			// the number of each piece left
+			int whitesGone = 0, bluesGone = 0;
+			
+			// the board to work with
+			Board board = guiManager.getStateOfBoard();
+			
+			// go through all the spots on the board
+			for (int i = 1; i < board.sizeOf(); i++) {
+				// if there is a piece there
+				if (board.occupied(i)) {
+					// if its a blue piece there
+					if ((board.getPieceAt(i)).getColor() == Color.blue) {
+						bluesGone++;	
+					} 
+					// if the piece is white
+					else if ((board.getPieceAt(i)).getColor() == Color.white) {
+						whitesGone++;
+					}
+				}
+			}
+			
+			// if either of the number are 0
+			if (whitesGone == 0 || bluesGone == 0) {
+				return true;
+			}
+						
+		}
+		catch (Exception e) {
+
+			System.err.println(e.getMessage());
+		}
+		
+		return false; //If the game has not ended
 	}
 	
 	
@@ -286,13 +389,15 @@ public class CheckerGUI extends JFrame implements ActionListener {
 	 * Reduces amount of parameters needed to construct GridBagConstraints
 	 */
 	class gridBagConstraints extends GridBagConstraints {
-		
+
 		/**
 		 * @param gridx gridx
 		 * @param gridy gridy
 		 */
 		public gridBagConstraints(int gridx, int gridy){
-			super(gridx, gridy, 0,0,0,0,0, 0, null, 0, 0);
+			super();
+			this.gridx = gridx;
+			this.gridy = gridy;
 		}
 		
 		/**
@@ -301,7 +406,10 @@ public class CheckerGUI extends JFrame implements ActionListener {
 		 * @param gridwidth
 		 */
 		public gridBagConstraints(int gridx, int gridy, int gridwidth){
-			super(gridx, gridy, gridwidth, 0, 0, 0, 0, 0, null, 0, 0);
+			super();
+			this.gridx = gridx;
+			this.gridy = gridy;
+			this.gridwidth = gridwidth;
 		}
 	}
 }
