@@ -28,6 +28,7 @@ import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.Vector;
 
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -335,71 +336,37 @@ public class CheckerGUI extends JFrame implements ActionListener {
 		for (int i = 1; i < board.sizeOf(); i++) {
 
 			// if there is a piece there
+			Icon pieceImage = null;
 			if (board.occupied(i)) {
-
-				// check to see if color is blue
-				if (board.colorAt(i) == Color.blue) {
-
-					// if there is a single piece there
-					if ((board.getPieceAt(i)).getType() == board.SINGLE) {
-
-						// show a blue single piece in that spot board
-						temp = (JButton) spaces.get(i);
-
-						// get the picture from the web
-						temp.setIcon(new ImageIcon(CheckerGUI.class
-								.getResource("Images/BlueSingle.gif")));
-
-						// if there is a kinged piece there
-					} else if ((board.getPieceAt(i)).getType() == board.KING) {
-
-						// show a blue king piece in that spot board
-						temp = (JButton) spaces.get(i);
-
-						// get the picture formt the web
-						try {
-							temp.setIcon(new ImageIcon(CheckerGUI.class
-									.getResource("Images/BlueKing.gif")));
-						} catch (Exception e) {
-						}
-					}
-
-					// check to see if the color is white
-				} else if (board.colorAt(i) == Color.white) {
-
-					// if there is a single piece there
-					if ((board.getPieceAt(i)).getType() == board.SINGLE) {
-
-						// show a blue single piece in that spot board
-						temp = (JButton) spaces.get(i);
-
-						// get the picture from the web
-						try {
-							temp.setIcon(new ImageIcon(CheckerGUI.class
-									.getResource("Images/WhiteSingle.gif")));
-						} catch (Exception e) {
-						}
-
-						// if there is a kinged piece there
-					} else if ((board.getPieceAt(i)).getType() == board.KING) {
-
-						// show a blue king piece in that spot board
-						temp = (JButton) spaces.get(i);
-
-						// get the picture from the web
-						try {
-							temp.setIcon(new ImageIcon(CheckerGUI.class
-									.getResource("Images/WhiteKing.gif")));
-						} catch (Exception e) {
-						}
-					}
-					// if there isnt a piece there
+				
+				String colorName = "";
+				String pieceType = "";
+				
+				if (Color.blue.equals(board.colorAt(i))) {
+					colorName = "Blue";
 				}
-			} else {
-				// show no picture
-				temp = (JButton) spaces.get(i);
-				temp.setIcon(null);
+				else if (Color.white.equals(board.colorAt(i))) {
+					colorName = "White";
+				}
+				
+				if ((board.getPieceAt(i)).getType() == board.SINGLE){
+					pieceType = "Single";
+				}
+				else if ((board.getPieceAt(i)).getType() == board.KING){
+					pieceType = "King";
+				}
+				
+				//Take the corresponding image
+				pieceImage = new ImageIcon(CheckerGUI_temp.class
+						.getResource("Images/" + colorName + pieceType + ".gif"));
 			}
+			
+			//Set the piece at the space
+			JButton space = (JButton) spaces.get(i);
+			try{
+				space.setIcon(pieceImage);
+			}
+			catch (Exception e) {}
 		}
 
 		// this code updates whos turn it is
