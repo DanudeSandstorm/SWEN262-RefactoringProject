@@ -1,5 +1,6 @@
 package Code;
 
+import java.awt.event.ActionListener;
 import java.net.URL;
 
 import javax.swing.JOptionPane;
@@ -77,6 +78,35 @@ public class GUIManager {
 		replayGUI.hide();
 	}	
 	
+	////////////////////////// -CheckerGUI- ///////////////////////
+	
+	public void addActionListener(ActionListener a){
+		facade.addActionListener(a);
+	}
+	
+	public void pressQuit() {
+		facade.pressQuit();
+	}
+	
+	public void selectSpace(int i) {
+		facade.selectSpace(i);
+	}
+	
+	public void pressDraw() {
+		facade.pressDraw();
+	}
+
+	public int getTimer() {
+		return facade.getTimer();
+	}
+	
+	public String getFacadeUpdate(){
+		return facade.update;
+	}
+
+	public String getPlayerSwitch(){
+		return facade.playerSwitch;
+	}
 	
 	////////////////////////// -Facade- //////////////////////////
 	
@@ -141,6 +171,8 @@ public class GUIManager {
 	public void startGame(){
 		facade.startGame();
 	}
+	
+
 	
 	
 	
